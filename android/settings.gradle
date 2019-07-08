@@ -1,0 +1,5 @@
+rootProject.name = 'RMTestSDK'
+include ':react-native-revenuemonster'
+project(':react-native-revenuemonster').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-revenuemonster/android')
+
+include ':app'
