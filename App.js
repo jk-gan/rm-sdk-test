@@ -20,17 +20,25 @@ const instructions = Platform.select({
 type Props = {};
 export default class App extends Component<Props> {
   componentDidMount() {
-    this.subscription = DeviceEventEmitter.addListener('rm:success', function(e: Event) {
-      RevenueMonster.show(e.Name);  
+    this.successSubscription = DeviceEventEmitter.addListener('rm:success', function(e) {
+      RevenueMonster.show(e.Status);  
+    });
+    this.failedSubscription = DeviceEventEmitter.addListener('rm:failed', function(e) {
+      RevenueMonster.show(e.Error);  
+    });
+    this.cancelSubscription = DeviceEventEmitter.addListener('rm:canceled', function(e) {
+      RevenueMonster.show(e.Error);  
     });
   }
 
   componentWillUnmount() {
-    this.subscription.remove();
+    this.successSubscription.remove();
+    this.failedSubscription.remove();
+    this.cancelSubscription.remove();
   }
 
   _onPressButton() {
-    RevenueMonster.triggerEvent("Testing RM SDK");
+    RevenueMonster.checkout("wx62173edb65003c7c", "1562638462657308056");
   }
   
   render() {
